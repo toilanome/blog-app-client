@@ -1,11 +1,8 @@
-  import axios from "axios";
-  import { useContext, useEffect, useState } from "react";
+    import { useContext, useEffect, useState } from "react";
   import { Link, useParams } from "react-router-dom";
   import { formatISO9075 } from "date-fns";
   import { getPost, getUserDetail } from "../api/auth";
-  import banner from "../Img/Rectangle_1.png";
   import { FaRegEdit } from "react-icons/fa";
-  import Rectangle_1 from "../Img/Rectangle_1.png";
   import { ContextMain } from "../Context/context";
   import { useMutation, useQuery, useQueryClient } from "react-query";
   import { createComment, deleteComment } from "../api/comment";
@@ -13,6 +10,7 @@
   import { CiEdit } from "react-icons/ci";
   import { RiDeleteBin6Line } from "react-icons/ri";
   import { IoIosOptions } from "react-icons/io";
+import ShortRead from "../components/ShortRead";
   const SinglePage = () => {
     const [postInfo, setPostInfo] = useState(null);
     const [userDetail, setUserDetail] = useState("");
@@ -99,7 +97,7 @@
         // Xóa nội dung comment sau khi thành công
         // setInputComment();
       } catch (error) {
-        console.error("Error posting comment:", error);
+        toast.error("Hãy đăng nhập để bình luận nhé <3")
       }
     };
 
@@ -180,47 +178,7 @@
           </div>
           <hr />
 
-          <section className="mt-20 mb-20 ">
-            <h4 className="shadow-md text-[#313131] font-semibold text-2xl mb-7">
-              Short Reads
-            </h4>
-
-            <div>
-              <div className="grid grid-cols-3  gap-12">
-                {posts?.allPost?.slice(7, 10).map((item) => (
-                  <>
-                    <div className="grid grid-cols-2 " key={item._id}>
-                      <div className="mr-5">
-                        <Link to={`/post/${item._id}`}>
-                          <img
-                            src={`http://localhost:4000/${item.cover}`}
-                            className="h-24 w-full hover:text-gray-700"
-                            onClick={scrollTop}
-                          />
-                        </Link>
-                      </div>
-                      <div className=" flex flex-col  items-center">
-                        <div className="space-y-1">
-                          <Link to={`/post/${item._id}`}>
-                            <h5
-                              className="font-bold text-lg break-words hover:text-gray-700"
-                              onClick={scrollTop}
-                            >
-                              {item.title}
-                            </h5>
-                          </Link>
-
-                          <p className="text-[#6E6E6E] break-words text-sm">
-                            {item?.summary}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                ))}
-              </div>
-            </div>
-          </section>
+          <ShortRead post={posts} scrollTop={scrollTop} />
 
           <section className="mt-20 mb-20 ">
             <h4 className="shadow-md text-[#313131] font-normal text-2xl mb-7 tracking-widest">
@@ -228,17 +186,17 @@
             </h4>
 
             <div className="mb-10">
-              <div class=" w-full  bg-white">
+              <div className=" w-full  bg-white">
                 <div>
                   <form onSubmit={handleSubmitComment}>
                     <textarea
                       placeholder="Add your comment..."
-                      class="p-2 focus:outline-1 focus:outline-blue-500 font-bold border-[0.1px] resize-none h-[120px] border-[#9EA5B1] rounded-md w-full"
+                      className="p-2 focus:outline-1 focus:outline-blue-500 font-bold border-[0.1px] resize-none h-[120px] border-[#9EA5B1] rounded-md w-full"
                       onChange={onChange}
                       name="comment"
                     ></textarea>
-                    <div class="flex justify-end">
-                      <button class="text-sm font-semibold absolute bg-[#313131] w-fit text-white py-2 rounded px-3">
+                    <div className="flex justify-end">
+                      <button className="text-sm font-semibold absolute bg-[#313131] w-fit text-white py-2 rounded px-3">
                         Post
                       </button>
                     </div>

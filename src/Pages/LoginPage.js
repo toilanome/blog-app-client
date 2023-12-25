@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { IoCreateOutline } from "react-icons/io5";
 import { useFormik } from 'formik'
 const LoginPage = () => {
-  const [inputValue, setInputValue] =useState({}) 
 const navigate = useNavigate()
   const mutationAccount = useMutation({
       mutationFn: (user) => signIn(user),
@@ -27,20 +26,7 @@ const navigate = useNavigate()
       }
   })
 
-  const onChange = (e) =>{
-      const {name, value} = e.target;
-      setInputValue({
-          ...inputValue,
-          [name]:value
-      })
-  }
   
-
-  const Login = (e) =>{
-      e.preventDefault()
-      mutationAccount.mutate(inputValue)
-  }
-
   const formikValidate = useFormik({
     initialValues: {
       email: "",
