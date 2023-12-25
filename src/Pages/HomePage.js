@@ -7,7 +7,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([])
   
   useEffect(() => {
-    fetch('http://localhost:4000/api/auth/getPost').then(response =>{
+    fetch('https://blog-app-serverr.onrender.com/api/auth/getPost').then(response =>{
       response.json().then(posts =>{
         setPosts(posts)
         

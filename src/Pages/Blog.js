@@ -26,7 +26,7 @@ const Blog = () => {
         const allCategory = response.data;
         setCategory(allCategory);
 
-        await fetch("http://localhost:4000/api/auth/getPost").then(
+        await fetch("https://blog-app-serverr.onrender.com/api/auth/getPost").then(
           (response) => {
             response.json().then((posts) => {
               setPosts(posts);

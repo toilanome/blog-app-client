@@ -41,7 +41,7 @@ const CreatePost = () => {
 
 
     try {
-      const response = await fetch('http://localhost:4000/api/auth/post',{
+      const response = await fetch('https://blog-app-serverr.onrender.com/api/auth/post',{
         method:'POST',
         body:data,
         headers: {Authorization: `Bearer ${token}`}
