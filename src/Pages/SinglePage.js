@@ -166,7 +166,7 @@ import ShortRead from "../components/ShortRead";
 
           <div>
             <img
-              src={`http://localhost:4000/${postInfo?.postDoc?.cover}`}
+              src={postInfo?.postDoc?.cover}
               className="h-[440px] w-full"
             />
           </div>

@@ -19,7 +19,7 @@ const ShortRead = ( {scrollTop}) => {
                       <div className="mr-5"  key={item._id}>
                         <Link to={`/post/${item._id}`}>
                           <img
-                            src={`http://localhost:4000/${item.cover}`}
+                            src={item.cover}
                             className="h-24 w-full hover:text-gray-700"
                             onClick={scrollTop}
                           />

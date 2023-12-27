@@ -67,7 +67,7 @@ const Post = ({ posts }) => {
                 <div>
                   <Link to={`/post/${item._id}`}>
                     <img
-                      src={`http://localhost:4000/${item.cover}`}
+                      src={item.cover}
                       onClick={scrollTop}
                     />
                   </Link>
@@ -148,8 +148,9 @@ const Post = ({ posts }) => {
               <div>
                 <Link to={`/post/${item._id}`}>
                   <img
-                    src={`http://localhost:4000/${item.cover}`}
+                    src={item.cover}
                     onClick={scrollTop}
+                    className="w-full"
                   />
                 </Link>
               </div>
@@ -169,9 +170,9 @@ const Post = ({ posts }) => {
               <div key={item._id}>
                 <div className="mb-5">
                   <Link to={`/post/${item._id}`}>
-                    <img
-                      src={`http://localhost:4000/${item.cover}`}
-                      className="rounded-md h-52"
+                    <img 
+                      src={item.cover}
+                      className="rounded-md h-52 w-full"
                       onClick={scrollTop}
                     />
                   </Link>
@@ -233,7 +234,7 @@ const Post = ({ posts }) => {
                   <div className="mr-5">
                     <Link to={`/post/${item._id}`}>
                       <img
-                        src={`http://localhost:4000/${item.cover}`}
+                        src={item.cover}
                         className="h-24 w-full hover:text-gray-700"
                         onClick={scrollTop}
                       />
@@ -293,7 +294,7 @@ const Post = ({ posts }) => {
                     <div className="mb-6">
                       <Link to={`/post/${item._id}`}>
                         <img
-                          src={`http://localhost:4000/${item.cover}`}
+                          src={item.cover}
                           className="rounded-lg"
                           onClick={scrollTop}
                         />
@@ -338,7 +339,7 @@ const Post = ({ posts }) => {
                       <div>
                         <Link to={`/post/${item._id}`}>
                           <img
-                            src={`http://localhost:4000/${item.cover}`}
+                            src={item.cover}
                             className="w-40 rounded-lg"
                             onClick={scrollTop}
                           />
@@ -373,7 +374,7 @@ const Post = ({ posts }) => {
                     <div>
                       <Link to={`/post/${item._id}`}>
                         <img
-                          src={`http://localhost:4000/${item.cover}`}
+                          src={item.cover}
                           className="w-40 rounded-lg"
                           onClick={scrollTop}
                         />

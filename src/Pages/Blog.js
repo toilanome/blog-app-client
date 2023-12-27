@@ -175,7 +175,7 @@ const Blog = () => {
                     <div>
                       <Link to={`/post/${item._id}`}>
                         <img
-                          src={`http://localhost:4000/${item.cover}`}
+                          src={item.cover}
                           onClick={scrollTop}
                         />
                       </Link>
