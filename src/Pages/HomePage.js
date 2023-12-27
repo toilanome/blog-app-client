@@ -3,6 +3,7 @@ import Post from './post'
 import banner from '../Img/Hero.png'
 import { FaArrowRight } from "react-icons/fa6";
 import { ContextMain } from '../Context/context';
+import Loading from '../components/Loading';
 const HomePage = () => {
   const [posts, setPosts] = useState([])
   
@@ -18,11 +19,7 @@ const HomePage = () => {
   }, [])
   const {isLoading} = useContext(ContextMain)
   if(isLoading){
-   return ( <div class='flex items-center justify-center min-h-screen'>
-  <div style={{borderTopColor:"transparent"}} className="w-8 h-8 border-4 border-blue-200 rounded-full animate-spin"></div>
-  <p class="ml-2">Wait a minute </p>
-</div>
-   )
+   return <Loading />
   } 
   return (
 <>

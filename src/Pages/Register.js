@@ -31,8 +31,8 @@ const Register = () => {
     validate: (values) => {
       const errors = {};
 
-      if (!values.userName) {
-        errors.userName = "Bắt buộc phải nhập userName";
+      if (!values.userName && values.userName.length > 6) {
+        errors.userName = "Bắt buộc phải nhập userName và phải lớn hơn 6 ký tự ";
       }
       if (!values.email) {
         errors.email = "Required email";

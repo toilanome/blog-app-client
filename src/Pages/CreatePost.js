@@ -37,7 +37,7 @@ const CreatePost = () => {
     data.set('summary', summary);
     data.set('content', content);
     data.set('categoryName', categoryName);
-    data.set('file', files[0]);
+    data.set('img', files[0]);
 
 
     try {

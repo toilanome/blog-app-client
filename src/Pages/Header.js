@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { getUserDetail } from '../api/auth';
 import { toast } from 'react-toastify';
 import logo from '../Img/Logo.svg';
 import { IoIosLogOut } from "react-icons/io";
+import { ContextMain } from '../Context/context';
+import Loading from '../components/Loading';
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const location = useLocation();
-
+  const {isLoading} = useContext(ContextMain)
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -39,7 +41,7 @@ const Header = () => {
       toast.error('Đã xảy ra lỗi khi đăng xuất');
     }
   };
-
+  if(isLoading) return <Loading />  
   const isHomePage = location.pathname === '/';
 
   return (
@@ -56,6 +58,7 @@ const Header = () => {
             <>
             <div className='flex items-center'>
             <span className='mr-5 b hover:text-gray-800 dark:hover:text-gray-200 '>Hello: {user?.response?.userName}</span>
+            
             <Link
                 to="/blog"
                 className={`mr-5 border-b-2 ${location.pathname === '/blog' ? 'border-gray-800' : 'border-transparent'} hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-800 mx-1.5 sm:mx-6`}

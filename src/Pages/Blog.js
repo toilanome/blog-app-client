@@ -5,6 +5,7 @@ import { ContextMain } from "../Context/context";
 import { CiSearch } from "react-icons/ci";
 import { getCategory, getDetailCategory } from "../api/category";
 import { useMutation } from "react-query";
+import Loading from "../components/Loading";
 
 const Blog = () => {
   const [category, setCategory] = useState([]);
@@ -19,6 +20,7 @@ const Blog = () => {
 
   const isHomePage = location.pathname === "/";
 
+  
   useEffect(() => {
     const feth = async () => {
       try {
@@ -75,11 +77,7 @@ const Blog = () => {
 
   const {isLoading} = useContext(ContextMain)
   if(isLoading){
-   return ( <div class='flex items-center justify-center min-h-screen'>
-  <div style={{borderTopColor:"transparent"}} className="w-8 h-8 border-4 border-blue-200 rounded-full animate-spin"></div>
-  <p class="ml-2">Wait a minute </p>
-</div>
-   )
+   return <Loading />
   } 
 
   return (
@@ -120,7 +118,7 @@ const Blog = () => {
           </div>
 
           <div class="flex min-h-screen flex-row bg-gray-100 text-gray-800">
-            <aside class="sidebar w-48 -translate-x-full transform bg-white p-4 transition-transform duration-150 ease-in md:translate-x-0 md:shadow-md border">
+            <aside class="sidebar w-48 -translate-x-full transform bg-white p-4 transition-transform duration-150 ease-in md:translate-x-0 md:shadow-md border mt-4">
               <div class="my-4 w-full border-b-4 border-indigo-100 text-center">
                 <span class="font-mono text-xl font-bold tracking-widest">
                   {" "}
@@ -210,7 +208,7 @@ const Blog = () => {
                       <div>
                         <Link to={`/post/${item._id}`}>
                           <img
-                            src={`http://localhost:4000/${item.cover}`}
+                            src={item.cover}
                             onClick={scrollTop}
                           />
                         </Link>

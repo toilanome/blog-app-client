@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Edittor from '../Edittor';
+import { toast } from 'react-toastify';
+import Loading from '../components/Loading';
 const EditPost = () => {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
@@ -65,21 +67,22 @@ const EditPost = () => {
     data.set('categoryName', categoryName);
     
     if (files && files.length > 0) {
-      data.set('file', files[0]);
+      data.set('img', files[0]);
     }
 
     try {
-        const response = await fetch(`http://localhost:4000/api/auth/post/${id}`, {
+        const response = await fetch(`https://blog-app-serverr.onrender.com/api/auth/post/${id}`, {
             method: 'PUT', // Use PUT for updating
             body: data,
             headers: { Authorization: `Bearer ${token}` },
         });
 
         if (response.ok) {
-            alert("Thành công up")
+          
+            toast.success("Update bài viết thành công")
         }
         if (!response.ok) {
-            throw new Error('Failed to update post');
+            toast.error("Update bài viết thất bại")
         }
 
         // Handle success or redirect to another page

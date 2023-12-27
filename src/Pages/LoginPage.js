@@ -113,7 +113,7 @@ const navigate = useNavigate()
                   <Link to={'/'} className='text-white'>
                   <HiOutlineLogin className='text-white text-2xl' />
                    </Link>
-                  <button className=' text-white font-mono  w-[93px] h-7 text-[15px] tracking-wider text-base font-bold border bg-gradient-to-r from-[#313131] to-[#000] rounded-lg  text-center '>Login</button>
+                  <button className=' text-white font-mono  w-[93px] h-7 text-[15px] tracking-wider text-base font-bold border bg-gradient-to-r from-[#313131] to-[#000] rounded-lg  text-center ' type='submit'>Login</button>
                   <div>
                   <Link to={'/register'} className='text-white'>
                   <IoCreateOutline   className='text-white text-2xl' />
