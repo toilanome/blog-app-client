@@ -1,14 +1,14 @@
 import React, {createContext, useContext} from 'react'
 import {useMutation,useQueryClient,useQuery} from 'react-query'
 import { getCategory } from '../api/category'
-import {  getAllPost, getPost } from '../api/auth'
+import {  deletePost, getAllPost, getPost } from '../api/auth'
 import { toast } from 'react-toastify'
 import { createComment, deleteComment, updateComment } from '../api/comment'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 export const ContextMain = createContext({})
 
 const ContextProvider = ({children}) => {
-
+    const navigate = useNavigate()
     const queryClient = useQueryClient()
     const { data: categories, isLoading, isError } = useQuery({
         queryKey: ['CATEGORY'],
@@ -36,7 +36,7 @@ const ContextProvider = ({children}) => {
             }
         },
      
-        retry:0
+        retry:2
 
     });
   
@@ -76,8 +76,19 @@ const ContextProvider = ({children}) => {
         }   
     })
 
+    const deleteDetailPost = useMutation({
+        mutationFn: async (id) => await deletePost(id),
+        onSuccess (){
+            queryClient.invalidateQueries(["POSTS"])
+            toast.success("Delete post thành công")
+        },
+        onError(){
+            toast.error("Delete post thất bại")
+        }   
+    })
 
-    const values = {categories, isError,isLoading,posts,createComentMutation, deleteComentMutation ,updateComentMutation}
+
+    const values = {categories, isError,isLoading,posts,createComentMutation, deleteComentMutation ,updateComentMutation,deleteDetailPost}
   return (
         <ContextMain.Provider value={  values }>
             {children}

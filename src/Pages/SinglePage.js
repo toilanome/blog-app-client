@@ -1,5 +1,5 @@
     import { useContext, useEffect, useState } from "react";
-  import { Link, useParams } from "react-router-dom";
+  import { Link, useNavigate, useParams } from "react-router-dom";
   import { formatISO9075 } from "date-fns";
   import { getPost, getUserDetail } from "../api/auth";
   import { FaRegEdit } from "react-icons/fa";
@@ -16,7 +16,7 @@ import ShortRead from "../components/ShortRead";
     const [userDetail, setUserDetail] = useState("");
     const [inputComment, setInputComment] = useState("");
     const [comments, setComments] = useState([]);
-    const { posts, updateComentMutation } = useContext(ContextMain);
+    const { posts, updateComentMutation , deleteDetailPost} = useContext(ContextMain);
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [dropdownStates, setDropdownStates] = useState([]);
@@ -122,6 +122,7 @@ import ShortRead from "../components/ShortRead";
 
 
     console.log("all comment ", postInfo?.postDoc?.comments);
+    console.log("post detail ", postInfo?.postDoc);
 
     const createdAtDate = postInfo?.postDoc?.createdAt
       ? new Date(postInfo.postDoc.createdAt)
@@ -133,6 +134,7 @@ import ShortRead from "../components/ShortRead";
     const checkUserDeleteComment = postInfo?.postDoc?.comments?.filter(
       (item) => item.users === userDetail?.response?._id
     );
+    const navigate = useNavigate()
 
     return (
       <>
@@ -150,6 +152,8 @@ import ShortRead from "../components/ShortRead";
             </span>
 
             {postInfo?.postDoc?.author?._id === userDetail?.response?._id && (
+              <>
+
               <Link to={`/editPost/${postInfo?.postDoc?._id}`}>
                 <div
                   className=" flex items-center justify-center pt-4 bg-gradient-to-r from-[#313131] to-[#000]  border rounded-lg p-4 w-[138px] h-10 text-center "
@@ -161,6 +165,25 @@ import ShortRead from "../components/ShortRead";
                   </button>
                 </div>
               </Link>
+
+              <div
+                  className=" flex items-center justify-center pt-4 bg-gradient-to-r from-[#313131] to-[#000]  border rounded-lg p-4 w-[138px] h-10 text-center "
+                  style={{ margin: "0px auto" }}
+                >
+                  <FaRegEdit className="text-white " />
+                  <button className=" text-white font-mono  w-[138px] h-10 tracking-wider text-sm font-bold   text-center " onClick={ async() => {
+                    window.confirm("Bạn có muốn xóa bài viết không ? ") &&
+                      deleteDetailPost.mutateAsync(postInfo?.postDoc?._id)
+                      setTimeout(() => {
+                        navigate('/blog')
+
+                      }, 2000)
+                    }}>
+                    Delete post
+                  </button>
+                </div>
+              </>
+              
             )}
           </div>
 
@@ -224,7 +247,7 @@ import ShortRead from "../components/ShortRead";
                   userDetail?.response?._id === item.users ? (
                     <span
                       className="block cursor-pointer"
-                      onClick={() => deleteComentMutation.mutateAsync(item._id)}
+                      onClick={() => deleteComentMutation.mutateAsync(item._id) }
                     >
                       X
                     </span>

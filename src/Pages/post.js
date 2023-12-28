@@ -69,6 +69,7 @@ const Post = ({ posts }) => {
                     <img
                       src={item.cover}
                       onClick={scrollTop}
+                      className="w-full"
                     />
                   </Link>
                 </div>

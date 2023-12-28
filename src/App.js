@@ -11,6 +11,8 @@ import CreatePost from './Pages/CreatePost';
 import SinglePage from './Pages/SinglePage';
 import EditPost from './Pages/EditPost';
 import Blog from './Pages/Blog';
+import Dashboard from './admin/dashboard';
+import ListPost from './admin/ListPost';
 
 
 
@@ -30,6 +32,12 @@ function App() {
 
         <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<Register />} />
+
+
+          <Route path='/admin'  element={<Dashboard />}>
+              <Route path='post' element={<ListPost />} />
+         
+        </Route>
       </Routes>
 
       <ToastContainer

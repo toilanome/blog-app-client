@@ -17,5 +17,7 @@ export const getPost = (id) =>{
 export const getAllPost = () =>{
     return baseAuth.get(`/getPost`)
 }
-
+export const deletePost = (id) =>{
+    return InsanceToken.delete(`/post/${id}`)
+}
 
