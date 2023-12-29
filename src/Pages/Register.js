@@ -31,7 +31,7 @@ const Register = () => {
     validate: (values) => {
       const errors = {};
 
-      if (!values.userName && values.userName.length > 6) {
+      if (!values.userName && values.userName.length <= 6) {
         errors.userName = "Bắt buộc phải nhập userName và phải lớn hơn 6 ký tự ";
       }
       if (!values.email) {
@@ -68,11 +68,13 @@ const Register = () => {
               </span>
             )}
           <div className=" bg-[#FAFAFA] w-[406px] h-12 flex items-center p-2 mb-7">
+     
             <div className="bg-gradient-to-r from-[#313131] to-[#000] mr-6">
               <div className=" text-white font-mono  w-[93px] h-7 text-[12px] font-semibold tracking-wider flex items-center justify-center">
                 UserName
               </div>
             </div>
+            
             <input
               className="border-none outline-none"
               type="text"
