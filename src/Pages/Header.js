@@ -12,6 +12,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const location = useLocation();
   const {isLoading} = useContext(ContextMain)
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -41,6 +42,9 @@ const Header = () => {
       toast.error('Đã xảy ra lỗi khi đăng xuất');
     }
   };
+  const handleClick = () =>{
+    return setLoading(true) && <Loading />
+  }
   if(isLoading) return <Loading />  
   const isHomePage = location.pathname === '/';
 
@@ -61,7 +65,7 @@ const Header = () => {
             
             <Link
                 to="/blog"
-                className={`mr-5 border-b-2 ${location.pathname === '/blog' ? 'border-gray-800' : 'border-transparent'} hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-800 mx-1.5 sm:mx-6`}
+                className={`mr-5 border-b-2 ${location.pathname === '/blog' ? 'border-gray-800' : 'border-transparent'} hover:text-gray-800 dark:hover:text-gray-200 hover:border-gray-800 mx-1.5 sm:mx-6`} onClick={handleClick}
               >
                 Blog
               </Link>

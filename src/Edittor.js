@@ -11,7 +11,7 @@ const Edittor = ({value,onChange}) => {
         ],
       };
   return (
-
+    
     <ReactQuill
                 onChange={onChange}
                 modules={modules}

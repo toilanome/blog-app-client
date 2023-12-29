@@ -94,8 +94,6 @@ import ShortRead from "../components/ShortRead";
         const response = await postComment.mutateAsync(updateComment);
         const newComment = response?.data?.newComment;
 
-        // Xóa nội dung comment sau khi thành công
-        // setInputComment();
       } catch (error) {
         toast.error("Hãy đăng nhập để bình luận nhé <3")
       }
@@ -175,7 +173,7 @@ import ShortRead from "../components/ShortRead";
                     window.confirm("Bạn có muốn xóa bài viết không ? ") &&
                       deleteDetailPost.mutateAsync(postInfo?.postDoc?._id)
                       setTimeout(() => {
-                        navigate('/blog')
+                        window.location.href= "/blog"
 
                       }, 2000)
                     }}>

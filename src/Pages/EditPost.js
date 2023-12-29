@@ -18,7 +18,6 @@ const EditPost = () => {
   const { isLoading } = useContext(ContextMain);
   const [loading, setLoading] = useState(false); 
   const { id } = useParams();
-  const navigate = useNavigate()
   useEffect(() => {
     const fetchInfo = async () => {
       try {
@@ -78,8 +77,13 @@ const EditPost = () => {
       });
 
       if (response.ok) {
+        setLoading(false)
+
         toast.success('Update bài viết thành công');
-        navigate('/blog')
+        setTimeout(() => {
+          window.location.href="/blog"
+
+        },2000)
       } else {
         toast.error('Update bài viết thất bại');
       }
@@ -130,7 +134,7 @@ const EditPost = () => {
           <Edittor onChange={setContent} value={content} />
 
           <button type='submit' className='mt-4 bg-gradient-to-r from-[#313131] to-[#000]bg-slate-600 text-white w-full h-9 font-bold text-sm'>
-            {loading ? <Loading className="fixed top-1/2 left-1/2 translate-x-1/2 translate-y-1/2" /> : 'UPDATE POST'}
+            {loading === true ? "Loading..." : 'UPDATE POST'}
           </button>
         </form>
       </div>

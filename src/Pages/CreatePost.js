@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
+import { toast } from 'react-toastify';
 
 const CreatePost = () => {
   const [files, setFiles] = useState(null); // Updated to use null instead of an empty string
-
+  const [loading, setLoading] = useState(false)
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -55,6 +56,7 @@ const CreatePost = () => {
       data.set('img', files[0]);
   
       try {
+        setLoading(true)
         const response = await fetch('https://blog-app-serverr.onrender.com/api/auth/post', {
           method: 'POST',
           body: data,
@@ -62,12 +64,15 @@ const CreatePost = () => {
         });
   
         if (response.ok) {
-          alert("Tạo thành công");
+          toast.success("Tạo bài viết thành công")
+          setLoading(false)
         } else {
-          throw new Error('Failed to create post');
+          toast.error("Tạo bài viết Thất bại")
         }
       } catch (error) {
-        console.error(error);
+        toast.error("Có lỗi gì đó đã xảy ra !!!!!!!!!!!")
+
+
         // Handle error
       }
   
@@ -148,9 +153,16 @@ const CreatePost = () => {
           />
           <br />
 
+
+          {formikValidate.touched.content &&
+            formikValidate.errors.content && (
+              <span className="text-red-500">
+                {formikValidate.errors.content}
+              </span>
+            )}
           <ReactQuill value={formikValidate.values.content} onChange={handleContentChange} modules={modules} className='break-words' style={{ whiteSpace: 'pre-wrap' }} />
           <button type="submit" className="mt-4 bg-gradient-to-r from-[#313131] to-[#000]bg-slate-600 text-white w-full h-9 font-bold text-sm">
-            CREATE POST
+           {loading === true ? "Loading..." : "CREATE POST" } 
           </button>
         </form>
       </div>
