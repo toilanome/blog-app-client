@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa6";
 const Footer = () => {
   return (
     <>
-        <footer className="container pt-12 pl-16 bg-gradient-to-r from-[#313131] to-[#000]">
+        <footer className="container pt-12 pl-16 bg-gradient-to-r from-[#313131] to-[#000] w-full " style={{margin:"0 auto"}} >
             <div className="grid grid-cols-2 gap-[252px] mb-20">
                 <div >
                     <div className='mb-6'>
