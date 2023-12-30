@@ -56,7 +56,7 @@ const EditPost = () => {
   const token = localStorage.getItem('accessToken');
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    
     const data = new FormData();
     data.set('title', title);
     data.set('summary', summary);

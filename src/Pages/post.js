@@ -166,9 +166,9 @@ const Post = ({ posts }) => {
         </h4>
 
         <div>
-          <div className="grid grid-cols-3 gap-28">
+          <div className="grid grid-cols-3 gap-28 ">
             {thePost?.slice(1, 4).map((item) => (
-              <div key={item._id}>
+              <div key={item._id} className="shadow-md ">
                 <div className="mb-5">
                   <Link to={`/post/${item._id}`}>
                     <img 
@@ -180,7 +180,7 @@ const Post = ({ posts }) => {
                 </div>
                 <div className="h-64">
                   <div>
-                    <span className="mr-5 text-xs">
+                    <span className="mr-5 text-xs font-sans">
                       {item?.author?.userName}
                     </span>
                     <span className="text-xs text-[#6E6E6E] ">
@@ -190,7 +190,7 @@ const Post = ({ posts }) => {
 
                   <Link to={`/post/${item._id}`}>
                     <h5
-                      className="font-extrabold text-xl break-words hover:text-gray-700"
+                      className="font-extrabold text-xl break-words hover:text-gray-700 "
                       onClick={scrollTop}
                     >
                       {item.title}
@@ -198,7 +198,7 @@ const Post = ({ posts }) => {
                   </Link>
 
                   <div className="h-[120px]">
-                    <p className="text-[#6E6E6E] break-words">{item.summary}</p>
+                    <p className="text-[#6E6E6E] break-words ">{item.summary}</p>
                   </div>
 
                   <div className="mt-8 flex items-center justify-between ">

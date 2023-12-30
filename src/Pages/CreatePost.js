@@ -50,11 +50,12 @@ const CreatePost = () => {
     onSubmit: async (values) => {
       const data = new FormData();
       data.set('title', values.title);
-      data.set('summary', values.summary);
+      data.set('summary', values.summary);  
       data.set('content', values.content);
       data.set('categoryName', values.categoryName);
       data.set('img', files[0]);
-  
+      
+      console.log("data", data);
       try {
         setLoading(true)
         const response = await fetch('https://blog-app-serverr.onrender.com/api/auth/post', {
@@ -62,6 +63,7 @@ const CreatePost = () => {
           body: data,
           headers: { Authorization: `Bearer ${token}` },
         });
+
   
         if (response.ok) {
           toast.success("Tạo bài viết thành công")

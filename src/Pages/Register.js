@@ -8,7 +8,7 @@ import { IoMdLogIn } from "react-icons/io";
 import { useFormik } from "formik";
 
 const Register = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [files, setFiles] = useState(null);
 
   const CreateUser = useMutation({
     mutationFn: async (user) => await signUp(user),
@@ -31,8 +31,9 @@ const Register = () => {
     validate: (values) => {
       const errors = {};
 
-      if (!values.userName && values.userName.length <= 6) {
-        errors.userName = "Bắt buộc phải nhập userName và phải lớn hơn 6 ký tự ";
+      if (!values.userName || values.userName.length <= 6) {
+        errors.userName =
+          "Bắt buộc phải nhập userName và phải lớn hơn 6 ký tự ";
       }
       if (!values.email) {
         errors.email = "Required email";
@@ -54,27 +55,54 @@ const Register = () => {
 
       return errors;
     },
-    onSubmit: (values) => CreateUser.mutate(values),
+    onSubmit: async (values) => {
+      console.log("value", values);
+
+      const data = new FormData();
+      data.set("userName", values.userName);
+      data.set("email", values.email);
+      data.set("password", values.password);
+      data.set("confirmPassword", values.confirmPassword);
+      if (files.length > 0) {
+        data.set("img", files[0]);
+      } else {
+        data.set("img", null); // hoặc giá trị mặc định khác tùy thuộc vào logic của bạn
+      }
+
+      console.log("checkl" ,Object.fromEntries(data) );
+      try {
+        const response = await CreateUser.mutateAsync(data);
+        console.log("res", response);
+        
+      } catch (error) {
+        // Handle error
+      }
+    },
   });
+
+  const handleChangeFiles = (e) => {
+    setFiles(e.target.files);
+  };
 
   return (
     <div className="benner min-h-screen flex items-center justify-center">
       <div className="">
-        <form onSubmit={formikValidate.handleSubmit}>
-        {formikValidate.touched.userName &&
+        <form
+          onSubmit={formikValidate.handleSubmit}
+          encType="multipart/form-data"
+        >
+          {formikValidate.touched.userName &&
             formikValidate.errors.userName && (
               <span className="text-red-500">
                 {formikValidate.errors.userName}
               </span>
             )}
           <div className=" bg-[#FAFAFA] w-[406px] h-12 flex items-center p-2 mb-7">
-     
             <div className="bg-gradient-to-r from-[#313131] to-[#000] mr-6">
               <div className=" text-white font-mono  w-[93px] h-7 text-[12px] font-semibold tracking-wider flex items-center justify-center">
                 UserName
               </div>
             </div>
-            
             <input
               className="border-none outline-none"
               type="text"
@@ -84,9 +112,22 @@ const Register = () => {
               defaultValue={formikValidate.values.userName}
               name="userName"
             />
-            
           </div>
-         
+
+          <div className=" bg-[#FAFAFA] w-[406px] h-12 flex items-center p-2 mb-7">
+            <div className="bg-gradient-to-r from-[#313131] to-[#000] mr-6">
+              <div className=" text-white font-mono  w-[93px] h-7 text-[12px] font-semibold tracking-wider flex items-center justify-center">
+                Avatar
+              </div>
+            </div>
+            <input
+              className="border-none outline-none text-xs"
+              type="file"
+              placeholder="Choose Avatar"
+              onChange={handleChangeFiles}
+            />
+          </div>
+
           {formikValidate.touched.email && formikValidate.errors.email && (
             <div className="text-red-500">{formikValidate.errors.email}</div>
           )}
@@ -96,7 +137,6 @@ const Register = () => {
                 Email
               </div>
             </div>
-
             <input
               className="border-none outline-none"
               type="email"
@@ -107,7 +147,7 @@ const Register = () => {
               name="email"
             />
           </div>
-          
+
           {formikValidate.touched.password &&
             formikValidate.errors.password && (
               <div className="text-red-500">
@@ -130,7 +170,7 @@ const Register = () => {
               name="password"
             />
           </div>
-          
+
           {formikValidate.touched.confirmPassword &&
             formikValidate.errors.confirmPassword && (
               <div className="text-red-500">
@@ -153,7 +193,6 @@ const Register = () => {
               name="confirmPassword"
             />
           </div>
-          
 
           <div className=" flex items-center justify-between h-10 ">
             <Link to={"/"} className="text-white">

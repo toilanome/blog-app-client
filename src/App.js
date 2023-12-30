@@ -13,6 +13,7 @@ import EditPost from './Pages/EditPost';
 import Blog from './Pages/Blog';
 import Dashboard from './admin/dashboard';
 import ListPost from './admin/ListPost';
+import ProfileUser from './Pages/ProfileUser';
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/blog' element={<Blog />} />
           <Route path='/post/:id' element={<SinglePage />} />
           <Route path='/editPost/:id' element={<EditPost />} />
+          <Route path='/profile' element={<ProfileUser />} />
         </Route>
         
 
