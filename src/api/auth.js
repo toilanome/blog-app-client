@@ -8,8 +8,8 @@ export const signIn = (user) =>{
 export const getUserDetail = () =>{
     return InsanceToken.get('/userDetail')
 }
-export const createPost = () =>{
-    return InsanceToken.post('/post')
+export const createPost = (post) =>{
+    return InsanceToken.post('/post', post)
 }
 export const getPost = (id) =>{
     return baseAuth.get(`/post/${id}`)

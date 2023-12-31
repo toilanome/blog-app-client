@@ -1,13 +1,14 @@
-import React, {createContext, useContext} from 'react'
+import React, {createContext, useContext, useState} from 'react'
 import {useMutation,useQueryClient,useQuery} from 'react-query'
 import { getCategory } from '../api/category'
-import {  deletePost, getAllPost, getPost } from '../api/auth'
+import {  createPost, deletePost, getAllPost, getPost } from '../api/auth'
 import { toast } from 'react-toastify'
 import { createComment, deleteComment, updateComment } from '../api/comment'
 import { useNavigate, useParams } from 'react-router-dom'
 export const ContextMain = createContext({})
 
 const ContextProvider = ({children}) => {
+
     const navigate = useNavigate()
     const queryClient = useQueryClient()
     const { data: categories, isLoading, isError } = useQuery({
@@ -24,8 +25,8 @@ const ContextProvider = ({children}) => {
         retry:0
     });
 
-    const { data: posts } = useQuery({
-        queryKey: ['POSTS'],
+    const { data: allPosts, refetch } = useQuery({
+        queryKey: ["POSTS"],
         queryFn: async () => {
             try {
                 const { data } = await getAllPost();
@@ -34,20 +35,12 @@ const ContextProvider = ({children}) => {
                 console.error('Error fetching products:', error);
                 throw error;
             }
-        },
-     
+        }  ,
         retry:2
 
     });
   
-//     const { id } = useParams();
-//   const {data :postDetail} = useQuery({
-//     queryKey: ["POST",id],
-//     queryFn:  async () =>{
-//         const {data} = await getPost(id)
-//         return data
-//     }
-//   })
+
     const createComentMutation = useMutation({
         mutationFn: async(comment) => await createComment(comment),
         onSuccess() {
@@ -79,6 +72,7 @@ const ContextProvider = ({children}) => {
     const deleteDetailPost = useMutation({
         mutationFn: async (id) => await deletePost(id),
         onSuccess (){
+            console.log("Deleting post was successful");
             queryClient.invalidateQueries(["POSTS"])
             toast.success("Delete post thành công")
         },
@@ -87,8 +81,17 @@ const ContextProvider = ({children}) => {
         }   
     })
 
+    const mutationCreatePost = useMutation({
+        mutationFn : async (post) => await  createPost(post),
+        onSuccess (){
+            queryClient.invalidateQueries(["POSTS"]);
+        },
+        onError(){
+            toast.error("Tạo bài post thất bại")
+        }   
+    })
 
-    const values = {categories, isError,isLoading,posts,createComentMutation, deleteComentMutation ,updateComentMutation,deleteDetailPost}
+    const values = {categories, isError,isLoading,allPosts,createComentMutation, deleteComentMutation ,updateComentMutation,deleteDetailPost, mutationCreatePost}
   return (
         <ContextMain.Provider value={  values }>
             {children}

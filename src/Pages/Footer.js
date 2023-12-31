@@ -4,8 +4,9 @@ import { FaArrowRight } from "react-icons/fa6";
 const Footer = () => {
   return (
     <>
-        <footer className="container pt-12 pl-16 bg-gradient-to-r from-[#313131] to-[#000] w-full " style={{margin:"0 auto"}} >
-            <div className="grid grid-cols-2 gap-[252px] mb-20">
+        <footer  className='container'>
+          <section className="container pt-12  bg-gradient-to-r from-[#313131] to-[#000] w-full " style={{margin:"0 auto"}}>
+          <div className="grid grid-cols-2 gap-[252px] mb-20">
                 <div >
                     <div className='mb-6'>
                         <img src={logo_footer}/>
@@ -29,6 +30,8 @@ const Footer = () => {
             <div className='pt-5 pb-5'>
                 <span className='text-white'>@copyright 2021 Gates</span>
             </div>
+          </section>
+            
         </footer>
     </>
   )

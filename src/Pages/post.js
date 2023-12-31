@@ -6,22 +6,25 @@ import { FaArrowRight } from "react-icons/fa6";
 import ContextProvider, { ContextMain } from "../Context/context";
 import { getCategory, getDetailCategory } from "../api/category";
 import { useMutation } from "react-query";
+import Loading from "../components/Loading";
 
-// import Rectangle_2 from '../Img/Rectangle_2.png'
 const Post = ({ posts }) => {
   const [category, setCategory] = useState([]);
   const [selectCategoryId, setSelectCategoryId] = useState();
+  const [loading, setLoading] = useState(false)
   const location = useLocation();
   const thePost = posts?.allPost;
 
   const isHomePage = location.pathname === "/";
 
   useEffect(() => {
+    setLoading(true)
     const fetch = async () => {
       try {
         const response = await getCategory();
         const allCategory = response.data;
 
+        setLoading(false)
         setCategory((prevCategory) => {
           if (!selectCategoryId && allCategory.length > 0) {
             setSelectCategoryId(allCategory[0]._id);
@@ -54,6 +57,9 @@ const Post = ({ posts }) => {
   const scrollTop = () => {
     window.scrollTo(0, 0);
   };
+  if ( loading) {
+    return <Loading />;
+  }
 
   return (
     <>

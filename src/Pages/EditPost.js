@@ -21,6 +21,7 @@ const EditPost = () => {
   useEffect(() => {
     const fetchInfo = async () => {
       try {
+       
         const response = await axios.get(`https://blog-app-serverr.onrender.com/api/auth/post/${id}`);
         const dataPost = response.data;
         setPostInfo(dataPost);

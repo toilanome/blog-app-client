@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import { ContextMain } from '../Context/context';
+import { useQueries, useQueryClient } from 'react-query';
 
 const CreatePost = () => {
   const [files, setFiles] = useState(null); // Updated to use null instead of an empty string
   const [loading, setLoading] = useState(false)
+  const {mutationCreatePost} = useContext(ContextMain)
   const modules = {
     toolbar: [
       [{ header: [1, 2, false] }],
@@ -16,6 +19,10 @@ const CreatePost = () => {
       ['clean'],
     ],
   };
+
+  const queryClient = useQueryClient()
+
+  
   
   const formikValidate = useFormik({
     initialValues: {
@@ -58,19 +65,19 @@ const CreatePost = () => {
       console.log("data", data);
       try {
         setLoading(true)
-        const response = await fetch('https://blog-app-serverr.onrender.com/api/auth/post', {
-          method: 'POST',
-          body: data,
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await mutationCreatePost.mutateAsync(data)
+        console.log("Rét ro", response);
+      if(response.status === 200 ){
+        
+        setLoading(false)
+        queryClient.invalidateQueries(["POSTS"]);
+
+        toast.success("Tạo bài viết thành công, vui lòng đợi 1 chút hihi <3")
+
+      }
 
   
-        if (response.ok) {
-          toast.success("Tạo bài viết thành công")
-          setLoading(false)
-        } else {
-          toast.error("Tạo bài viết Thất bại")
-        }
+        
       } catch (error) {
         toast.error("Có lỗi gì đó đã xảy ra !!!!!!!!!!!")
 
@@ -91,7 +98,6 @@ const CreatePost = () => {
     setFiles(e.target.files);
   };
 
-  const token = localStorage.getItem('accessToken');
 
   return (
     <>

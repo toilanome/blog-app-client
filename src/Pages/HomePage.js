@@ -25,9 +25,9 @@ const HomePage = () => {
 <>
 
     <div>
-        <div className='relative'>
-          <img  src={banner}/>
-          <div className='absolute top-1/4 left-20 '>
+        <div className='relative container'>
+          <img  src={banner} className='object-cover'/>
+          <div className='absolute top-1/4 left-24 '>
               <div className='space-y-5 '>
                 <h1 className=' text-[83px] font-normal leading-[95px] tracking-wide text-[#FFFFFF] font-serif'>Welcome to <br/> Gates</h1>
                 <p className='text-[#FAFAFA] font-medium text-[18px leading-7]'>Get the latest news on your favourite mangas, anime and <br/> manhwa around the world!</p>

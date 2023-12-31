@@ -5,11 +5,11 @@ import Loading from '../components/Loading.js'
 
 const ListPost = () => {    
 
-    const {posts,deleteDetailPost , isLoading} = useContext(ContextMain)
+    const {allPosts,deleteDetailPost , isLoading} = useContext(ContextMain)
     if(isLoading) {
       return <Loading />
     }
-    console.log("Post", posts);
+    console.log("Post", allPosts);
   return (
     <>
         <div className="py-1 bg-blueGray-50 w-full " style={{marginTop:"-80px"}}>
@@ -54,7 +54,7 @@ const ListPost = () => {
         </thead>
 
        <tbody>
-          {posts?.allPost?.map((item) =>(
+          {allPosts?.allPost?.map((item) =>(
             <tr key={item._id}>
             <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4 text-left text-blueGray-700 ">
               {item.title}

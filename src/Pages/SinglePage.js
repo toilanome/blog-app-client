@@ -16,10 +16,11 @@ const SinglePage = () => {
   const [userDetail, setUserDetail] = useState("");
   const [inputComment, setInputComment] = useState("");
   const [comments, setComments] = useState([]);
-  const { posts, updateComentMutation, deleteDetailPost } =
+  const { allPosts, updateComentMutation, deleteDetailPost } =
     useContext(ContextMain);
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
 
   const { id } = useParams();
@@ -60,7 +61,6 @@ const SinglePage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(["POSTDETAIL"]);
 
-      refetch();
       toast.success("Xóa comment thành công");
     },
     onError() {
@@ -91,7 +91,13 @@ const SinglePage = () => {
     };
 
     try {
+      setLoading(true)
       const response = await postComment.mutateAsync(updateComment);
+
+      if(response.status === 200) {
+        setLoading(false)
+        toast.success("Bình luận thành công")
+      }
       const newComment = response?.data?.newComment;
     } catch (error) {
       toast.error("Hãy đăng nhập để bình luận nhé <3");
@@ -104,10 +110,14 @@ const SinglePage = () => {
     };
 
     try {
+      setLoading(true)
       const response = await updateComentMutation.mutateAsync({
         id: commentId,
         ...updateComment,
       });
+      if(response.status === 200 ){
+        setLoading(false)
+      }
       const newComment = response?.data?.newComment;
 
       // Xóa nội dung comment sau khi thành công
@@ -184,7 +194,7 @@ const SinglePage = () => {
         </div>
 
         <div>
-          <img src={postInfo?.postDoc?.cover} className="h-[440px] w-full" />
+          <img src={postInfo?.postDoc?.cover} className="h-[480px] w-full object-cover" />
         </div>
 
         <div className="mt-14 mb-14">
@@ -194,7 +204,7 @@ const SinglePage = () => {
         </div>
         <hr />
 
-        <ShortRead post={posts} scrollTop={scrollTop} />
+        <ShortRead post={allPosts} scrollTop={scrollTop} />
 
         <section className="mt-20 mb-20 ">
           <h4 className="shadow-md text-[#313131] font-normal text-2xl mb-7 tracking-widest">
@@ -213,7 +223,7 @@ const SinglePage = () => {
                   ></textarea>
                   <div className="flex justify-end">
                     <button className="text-sm font-semibold absolute bg-[#313131] w-fit text-white py-2 rounded px-3">
-                      Post
+                      {loading ? "Loading..." : "Post"}
                     </button>
                   </div>
                 </form>
@@ -223,31 +233,6 @@ const SinglePage = () => {
 
           <hr className="border " />
 
-          {/* {comments.map((item) => (
-              <div className="mt-5 grid grid-cols-[100px_minmax(600px,_1fr)] gap-4"> 
-                <div className="mr-3 w-full">
-                  <img
-                    src="https://tse1.mm.bing.net/th?id=OIP.Y9MaxiVxV-8HnzG7MuNC3wHaE8&pid=Api&rs=1&c=1&qlt=95&w=179&h=119"
-                    className="rounded-xl"
-                  />
-                </div>
-                <div>
-                  <div>
-                    <h3 className="font-semibold text-base ">{item.userName}</h3>
-                    <p className="text-sm text-[#313131]">{item.comment}</p>
-                  </div>
-                  {checkUserDeleteComment &&
-                  userDetail?.response?._id === item.users ? (
-                    <span
-                      className="block cursor-pointer"
-                      onClick={() => deleteComentMutation.mutateAsync(item._id) }
-                    >
-                      X
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-            ))} */}
 
           {postInfo?.postDoc?.comments?.map((item, index) => (
             <div className="mt-5 grid grid-cols-[100px_minmax(600px,_1fr)] gap-4">
@@ -294,7 +279,7 @@ const SinglePage = () => {
                           }} // Xử lý hành động cập nhật
                           className="text-sm font-semibold  bg-[#313131] w-fit text-white py-2 rounded px-3 ml-2"
                         >
-                          Save
+                          {loading ? "Loading..."  : "Save"}
                         </button>
                       </div>
                     </>

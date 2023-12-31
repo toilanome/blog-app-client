@@ -11,42 +11,30 @@ const Blog = () => {
   const [category, setCategory] = useState([]);
   const [selectCategoryId, setSelectCategoryId] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [searchItem, setSearchItem] = useState("");
-  const [fillItemSearch, setFillItemSearch] = useState("");
-
+  const [searchItem, setSearchItem] = useState('');
+  const [fillItemSearch, setFillItemSearch] = useState('');
   const location = useLocation();
-  const thePost = posts?.allPost;
-  console.log("the post", thePost);
+  const [loading, setLoading] = useState(false);
 
-  const isHomePage = location.pathname === "/";
-
-  
-  useEffect(() => {
-    const feth = async () => {
-      try {
-        const response = await getCategory();
-        const allCategory = response.data;
-        setCategory(allCategory);
-
-        await fetch("https://blog-app-serverr.onrender.com/api/auth/getPost").then(
-          (response) => {
-            response.json().then((posts) => {
-              setPosts(posts);
-            });
-          }
-        );
-      } catch (error) {}
-    };
-    feth();
-  }, []);
-  console.log("check post ", posts);
 
   const mutationCategoryDetail = useMutation({
     mutationFn: async (_id) => await getDetailCategory(_id),
     onSuccess() {
-      console.log("thành công");
+      console.log('thành công');
     },
   });
+
+  const { isLoading, categories, allPosts } = useContext(ContextMain);
+
+  console.log("cayegory", categories);
+  
+  const thePost = allPosts?.allPost;
+  console.log("Posts : ", thePost);
+
+
+  if (isLoading || loading) {
+    return <Loading />;
+  }
 
   const handleClick = async (_id) => {
     setSelectCategoryId(_id);
@@ -56,8 +44,6 @@ const Blog = () => {
   const filterPosts = selectCategoryId
     ? thePost?.filter((post) => post?.category?._id === selectCategoryId)
     : thePost;
-
-  console.log("category", category);
 
   const handleSearch = (query) => {
     if (!query) {
@@ -69,16 +55,12 @@ const Blog = () => {
 
     setFillItemSearch(fillterd);
   };
-  console.log("fil", fillItemSearch);
 
   const scrollTop = () => {
     window.scrollTo(0, 0);
   };
 
-  const {isLoading} = useContext(ContextMain)
-  if(isLoading){
-   return <Loading />
-  } 
+  
 
   return (
     <>
@@ -117,18 +99,18 @@ const Blog = () => {
             </nav>
           </div>
 
-          <div class="flex min-h-screen flex-row bg-gray-100 text-gray-800">
-            <aside class="sidebar w-48 -translate-x-full transform bg-white p-4 transition-transform duration-150 ease-in md:translate-x-0 md:shadow-md border mt-4">
-              <div class="my-4 w-full border-b-4 border-indigo-100 text-center">
-                <span class="font-mono text-xl font-bold tracking-widest">
+          <div className="flex min-h-screen flex-row bg-gray-100 text-gray-800">
+            <aside className="sidebar w-48 -translate-x-full transform bg-white p-4 transition-transform duration-150 ease-in md:translate-x-0 md:shadow-md border mt-4">
+              <div className="my-4 w-full border-b-4 border-indigo-100 text-center">
+                <span className="font-mono text-xl font-bold tracking-widest">
                   {" "}
                   CATEGORY{" "}
                 </span>
               </div>
-              <div class="my-4"></div>
+              <div className="my-4"></div>
 
               <nav className=" ">
-                {category?.map((item) => (
+                {categories?.map((item) => (
                   <div key={item._id} className="mb-3">
                     <a
                       onClick={() => handleClick(item._id)}

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useContext } from 'react';
 import { ContextMain } from '../Context/context';
 const ShortRead = ( {scrollTop}) => {
-    const { posts } = useContext(ContextMain);
+    const { allPosts } = useContext(ContextMain);
 
   return (
    <>
@@ -13,7 +13,7 @@ const ShortRead = ( {scrollTop}) => {
 
             <div>
               <div className="grid grid-cols-3  gap-12" >
-                {posts?.allPost?.slice(7, 10).map((item,index) => (
+                {allPosts?.allPost?.slice(7, 10).map((item,index) => (
                   <>
                     <div className="grid grid-cols-2 " key={item._id}>
                       <div className="mr-5"  key={item._id}>
