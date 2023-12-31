@@ -4,10 +4,10 @@ import 'react-quill/dist/quill.snow.css';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import { ContextMain } from '../Context/context';
-import { useQueries, useQueryClient } from 'react-query';
+import { useQueries, useQueryClient } from 'react-query'
 
 const CreatePost = () => {
-  const [files, setFiles] = useState(null); // Updated to use null instead of an empty string
+  const [files, setFiles] = useState(null); 
   const [loading, setLoading] = useState(false)
   const {mutationCreatePost} = useContext(ContextMain)
   const modules = {
@@ -70,9 +70,11 @@ const CreatePost = () => {
       if(response.status === 200 ){
         
         setLoading(false)
-        queryClient.invalidateQueries(["POSTS"]);
 
-        toast.success("Tạo bài viết thành công, vui lòng đợi 1 chút hihi <3")
+        toast.success("Tạo bài viết thành công <3")
+        // setTimeout(() =>{
+        //   window.location.href="/blog"
+        // },2000)
 
       }
 
@@ -85,7 +87,6 @@ const CreatePost = () => {
         // Handle error
       }
   
-      console.log('file:', files);
     },
   });
 

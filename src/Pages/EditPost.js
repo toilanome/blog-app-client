@@ -18,6 +18,7 @@ const EditPost = () => {
   const { isLoading } = useContext(ContextMain);
   const [loading, setLoading] = useState(false); 
   const { id } = useParams();
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchInfo = async () => {
       try {

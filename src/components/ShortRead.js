@@ -15,7 +15,7 @@ const ShortRead = ( {scrollTop}) => {
               <div className="grid grid-cols-3  gap-12" >
                 {allPosts?.allPost?.slice(7, 10).map((item,index) => (
                   <>
-                    <div className="grid grid-cols-2 " key={item._id}>
+                    <div className="grid grid-cols-2 " key={index}>
                       <div className="mr-5"  key={item._id}>
                         <Link to={`/post/${item._id}`}>
                           <img

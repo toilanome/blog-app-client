@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { getUserDetail } from '../api/auth';
 import { toast } from 'react-toastify';
 import logo from '../Img/Logo.svg';

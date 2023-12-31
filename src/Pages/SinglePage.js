@@ -22,7 +22,7 @@ const SinglePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dropdownStates, setDropdownStates] = useState([]);
-
+  const {userDetails} = useContext(ContextMain)
   const { id } = useParams();
   const queryClient = useQueryClient();
 
@@ -32,21 +32,22 @@ const SinglePage = () => {
     setDropdownStates(updatedDropdownStates);
   };
 
-  useEffect(() => {
-    const fetchInfo = async () => {
-      try {
-        const token = localStorage.getItem("accessToken");
-        if (token) {
-          const res = await getUserDetail();
-          const detail = res.data;
-          setUserDetail(detail);
-        }
-      } catch (error) {}
-    };
+  // useEffect(() => {
+  //   const fetchInfo = async () => {
+  //     try {
+  //       const token = localStorage.getItem("accessToken");
+  //       if (token) {
+  //         const res = await getUserDetail();
+  //         const detail = res.data;
+  //         setUserDetail(detail);
+  //       }
+  //     } catch (error) {}
+  //   };
 
-    fetchInfo();
-  }, [id]);
+  //   fetchInfo();
+  // }, [id]);
 
+  console.log("detail", userDetails);
   const { data: postDetail, refetch } = useQuery({
     queryKey: ["POSTDETAIL", id],
     queryFn: async () => {
@@ -138,7 +139,7 @@ const SinglePage = () => {
   };
 
   const checkUserDeleteComment = postInfo?.postDoc?.comments?.filter(
-    (item) => item.users === userDetail?.response?._id
+    (item) => item.users === userDetails?.response?._id
   );
   const navigate = useNavigate();
 
@@ -157,7 +158,7 @@ const SinglePage = () => {
             by @{postInfo?.postDoc?.author?.userName}
           </span>
 
-          {postInfo?.postDoc?.author?._id === userDetail?.response?._id && (
+          {postInfo?.postDoc?.author?._id === userDetails?.response?._id && (
             <>
               <Link to={`/editPost/${postInfo?.postDoc?._id}`}>
                 <div
@@ -291,7 +292,7 @@ const SinglePage = () => {
 
                 <div className="inline-block relative w-24">
                   {checkUserDeleteComment &&
-                  userDetail?.response?._id === item.users ? (
+                  userDetails?.response?._id === item.users ? (
                     <div className="group">
                       <button
                         className="text-gray-500 hover:text-gray-700 focus:outline-none focus:border-none focus:ring-0 mt-[6px]"

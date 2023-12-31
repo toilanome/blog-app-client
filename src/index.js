@@ -10,7 +10,9 @@ import {
   useQueryClient,
   QueryClient,
   QueryClientProvider,
-} from 'react-query'
+} from 'react-query';
+
+
 import { ReactQueryDevtools } from 'react-query/devtools'
 import ContextProvider from './Context/context';
 const queryClient = new QueryClient()
@@ -19,7 +21,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-    <ContextProvider> 1
+    <ContextProvider> 
 
       <App />
       <ReactQueryDevtools initialIsOpen={false} />

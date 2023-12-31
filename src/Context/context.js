@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useState} from 'react'
 import {useMutation,useQueryClient,useQuery} from 'react-query'
 import { getCategory } from '../api/category'
-import {  createPost, deletePost, getAllPost, getPost } from '../api/auth'
+import {  createPost, deletePost, getAllPost, getPost, getUserDetail } from '../api/auth'
 import { toast } from 'react-toastify'
 import { createComment, deleteComment, updateComment } from '../api/comment'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -30,6 +30,20 @@ const ContextProvider = ({children}) => {
         queryFn: async () => {
             try {
                 const { data } = await getAllPost();
+                return data
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                throw error;
+            }
+        }  ,
+        retry:2
+
+    });
+    const { data: userDetails } = useQuery({
+        queryKey: ["USERDETAIL"],
+        queryFn: async () => {
+            try {
+                const { data } = await getUserDetail();
                 return data
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -85,13 +99,14 @@ const ContextProvider = ({children}) => {
         mutationFn : async (post) => await  createPost(post),
         onSuccess (){
             queryClient.invalidateQueries(["POSTS"]);
+
         },
         onError(){
             toast.error("Tạo bài post thất bại")
         }   
     })
 
-    const values = {categories, isError,isLoading,allPosts,createComentMutation, deleteComentMutation ,updateComentMutation,deleteDetailPost, mutationCreatePost}
+    const values = {categories, isError,isLoading,allPosts,createComentMutation, deleteComentMutation ,updateComentMutation,deleteDetailPost, mutationCreatePost, userDetails}
   return (
         <ContextMain.Provider value={  values }>
             {children}
