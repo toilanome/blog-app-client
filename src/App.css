@@ -14,7 +14,7 @@ main{
     margin: 0 auto;
 }
 .container{
-  
+    max-width: 1480px;
   padding-left: 50px;
   padding-right: 50px;
 }
